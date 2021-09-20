@@ -1,4 +1,12 @@
-#!/bin/bash
+  
+#!/usr/bin/env bash
+#-------------------------------------------------------------------------
+#      _          _    __  __      _   _
+#     /_\  _ _ __| |_ |  \/  |__ _| |_(_)__
+#    / _ \| '_/ _| ' \| |\/| / _` |  _| / _|
+#   /_/ \_\_| \__|_||_|_|  |_\__,_|\__|_\__|
+#  Arch Linux Post Install Setup and Config
+#-------------------------------------------------------------------------
 
 echo "-------------------------------------------------"
 echo "Starting Script                                  "
@@ -26,9 +34,9 @@ sgdisk -a 2048 -o ${DISK} # new gpt disk 2048 alignment
 
 # create partitions
 sgdisk -n 1:0:+200M ${DISK} # partition 1 (UEFI SYS), default start block, 512MB
-sgdisk -n 2:0:+40G ${DISK} # partition 2 (Root), default start, remaining
-sgdisk -n 3:0:-8G ${DISK}   # partition 3 (swap), default start, remaining (-8G for 8GB Swap)
-sgdisk -n 4:0:0 ${DISK}     # partition 4 (home), default start, remaining
+sgdisk -n 2:0:+100G ${DISK} # partition 2 (Root), default start, remaining
+sgdisk -n 3:0:-8G ${DISK}   # partition 3 (home), default start, remaining (-8G for 8GB Swap)
+sgdisk -n 4:0:0 ${DISK}     # partition 4 (swap), default start, remaining
 
 # set partition types
 sgdisk -t 1:ef00 ${DISK} #EFI
@@ -56,7 +64,7 @@ mkdir /mnt
 mount "${DISK}2" /mnt
 btrfs su cr /mnt/@          # Setup Subvolume for btrfs and timeshift
 umount -l /mnt
-mount "${DISK}4" /mnt       
+mount "${DISK}3" /mnt       
 btrfs su cr /mnt/@home      # Setup Subvolume for btrfs and timeshift
 umount -l /mnt
 mount -o subvol=@ "${DISK}2" /mnt        # Mount Subolume from root   
@@ -81,12 +89,12 @@ hwclock --systohc
 #locale-gen
 echo "LANG=en_US.UTF-8" >> /etc/locale.conf
 echo "KEYMAP=de-latin1-nodeadkeys" >> /etc/vconsole.conf
-#echo "annefrank" >> /etc/hostname
+#echo "ReRe" >> /etc/hostname
 # Setting hosts file
 echo "
 127.0.0.1	    localhost
 ::1		        localhost
-127.0.1.1	    annefrank.localdomain	ReRe" >> /etc/hosts
+127.0.1.1	    ReRe.localdomain	ReRe" >> /etc/hosts
 mkinitcpio -P
 echo "--------------------------------------"
 echo "-- Grub Installation  --"
