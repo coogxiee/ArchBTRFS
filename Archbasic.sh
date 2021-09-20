@@ -109,4 +109,4 @@ echo "--------------------------------------"
 echo "--          Script ends here!       --"
 echo "--------------------------------------"
 EOT
-umount -R /mn
+umount -R /mnt
