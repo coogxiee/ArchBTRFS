@@ -32,7 +32,7 @@ echo "KEYMAP=de-latin1-nodeadkeys" >> /etc/vconsole.conf
 echo "
 127.0.0.1	    localhost
 ::1		        localhost
-127.0.1.1	    annefrank.localdomain	"annefrank" >> /etc/hosts
+127.0.1.1	    annefrank.localdomain	annefrank" >> /etc/hosts
 mkinitcpio -P
 echo "--------------------------------------"
 echo "-- Grub Installation  --"
