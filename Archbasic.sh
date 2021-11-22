@@ -8,6 +8,16 @@
 #  Arch Linux Post Install Setup and Config
 #-------------------------------------------------------------------------
 echo "--------------------------------------"
+echo "-- Arch Install on selected Drive   --"
+echo "--------------------------------------"
+
+pacstrap /mnt base base-devel linux linux-firmware grub efibootmgr nano git sudo --noconfirm --needed
+genfstab -U /mnt >> /mnt/etc/fstab
+
+cat << EOT | arch-chroot /mnt
+
+pacman -S neofetch --noconfirm
+echo "--------------------------------------"
 echo "-- Setting up localtime             --"
 echo "--------------------------------------"
 ln -sf /usr/share/zoneinfo/Europe/Vienna /etc/localtime
@@ -40,7 +50,7 @@ root
 root
 echo "Add User"
 echo "Eddit sudoers with (EDITOR=nano visudo)"
-echo "Add User to groups (wheel,video,audio,optical,storage,tty)
+echo "Add User to groups (wheel,video,audio,optical,storage,tty)"
 echo "--------------------------------------"
 echo "--          Script ends here!       --"
 echo "--------------------------------------"
